@@ -258,7 +258,6 @@ if __name__ == '__main__':
     pub = rospy.Publisher('speech', Int8, queue_size = 20)
     pub_vel = rospy.Publisher('/temp_cmd_vel', Twist, queue_size = 10)
     pub_speech = rospy.Publisher('isKeepGoing', Float64MultiArray, queue_size = 10)
-    # rospy.Subscriber ('/odom', Odometry, odom_callback)#
     rospy.Subscriber("/zed2/zed_node/depth/depth_registered", Image, callback=depth_callback, queue_size=1)
     rospy.Subscriber("CenterAndDegree", Float64MultiArray, CenterAndDegree)
     rospy.Subscriber('SeeSomething', Int8, SeeSomething)  
