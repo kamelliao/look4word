@@ -1,14 +1,13 @@
 #! /usr/bin/env python
+import time
+import math
+import os
 import rospy
 from std_msgs.msg import String, Int8, Float64MultiArray
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
 import numpy as np
-import time
-import math
-import os
-
 import speech_recognition as sr
 
 from speech import speech2text
@@ -61,7 +60,6 @@ if __name__ == '__main__':
             get_instruction() # play audio
             utterance = speech2text(r, microphone, mode='google_api', language='en-US')
             room_no = oracle.get_room(utterance)
-            # room_no = '412'
             rospy.loginfo(f"GoogleApi | room: '{room_no}' | transcript: '{utterance}'")
             # update floor only when valid room number is detected
             if room_no.isnumeric() and len(room_no)==3:
@@ -71,10 +69,6 @@ if __name__ == '__main__':
                 else:
                     reply_instruction('elevator')  # play audio
         else:
-            # if mention_people != 0:
-            #     print("play audio")
-            #     select_audio(mention_people) # play audio
-            #     mention_people = 0
             # set elevator state
             label, proba = speech2text(r, microphone, mode='elevator')
             rospy.loginfo(f'Elevator state | label {label} | proba {proba}')
