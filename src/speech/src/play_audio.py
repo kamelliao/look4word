@@ -14,8 +14,8 @@ def select_audio(msg: int):
         print(f'play up_button.wav...')
     elif msg==2:
         wav_file = route+'floor_button.wav'
-        # play_audio(wav_file)
-        # print(f'play floor_button.wav...')
+        play_audio(wav_file)
+        print(f'play floor_button.wav...')
     elif msg==3:
         wav_file = route+'done.wav'
         play_audio(wav_file)
@@ -32,19 +32,3 @@ def reply_instruction(target='elevator'):
         sound = AudioSegment.from_file(file='./src/speech/resources/speech_audio/first_floor.wav', format='wav')
     play(sound)
 
-
-if  __name__ == '__main__':
-    while True:
-        vid = int(input('Input sound to play: '))
-        if vid == 1:
-            get_instruction()
-        elif vid == 2:
-            reply_instruction()
-        elif vid == 3:
-            select_audio(1)
-        elif vid == 4:
-            select_audio(2)
-        elif vid == 5:
-            select_audio(3)
-        else:
-            pass
