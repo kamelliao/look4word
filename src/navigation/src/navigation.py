@@ -293,23 +293,10 @@ if __name__ == '__main__':
     rate = rospy.Rate(20)
     while not rospy.is_shutdown():
         print("original target floor", target_floor)
-        if target_floor == 0:
-
-            # for i in range(5):
-                # if target_floor != 0:
-                #     break
+        if target_floor == 0:#waiting for the target floor
             rospy.Subscriber('target_floor', String, targetFloor)#
             rospy.sleep(1)
-            # print("target floor", target_floor)
-        # while(1):
-        #     if target_floor != 0:
-        #         break
-        #     # print("ready to listen the floor")
-        #     rospy.Subscriber('target_floor', String, targetFloor)#
-        #     print("target", target_floor)
-            
-        # target_floor = 4
-        # target_room = 12
+
         while(target_floor == 2 or target_floor == 3 or target_floor == 4):#elevator mode
             # rospy.Subscriber("/zed2/zed_node/depth/depth_registered", Image, callback=depth_callback, queue_size=1)
             rospy.loginfo("searching for elevator")
@@ -363,7 +350,7 @@ if __name__ == '__main__':
                                     pub.publish(mention)#
                                     mention = 0
                                     pub.publish(mention)#
-                                    rotate(180)
+                                    rotate(180)#rotate 180 degree to the elevator door
                                     waitForEleOpen = 1
                                     rospy.loginfo("break2")
                                     break
@@ -376,7 +363,7 @@ if __name__ == '__main__':
                         if(IHeard == 3):#
                             rospy.loginfo("reach the target floor")
                             movemode = 1
-                            # move_straight_time("forward", 1, 1)#
+                            move_straight_time("forward", speed, depth[tmp]/speed)#
                             rospy.loginfo("break4")
                             print("=======================================go out the elevator===============================================")
                             rospy.sleep(100)
@@ -412,7 +399,8 @@ if __name__ == '__main__':
             # rospy.Subscriber('SeeSomething', Int8, SeeSomething)#
         
             if(ISee == 3):
-                rospy.loginfo("see the door")#move by man
+                rospy.loginfo("see the door")
+                for i in range(3):
                 # rospy.Subscriber("CenterAndDegree", Float64MultiArray, CenterAndDegree)
                 rospy.sleep(15)
                 ISee = 0
@@ -434,7 +422,7 @@ if __name__ == '__main__':
                         rospy.loginfo("break7")
                         break
                     else:#not the target room
-                        rospy.sleep(15)#move to the original way by man
+                        rospy.sleep(15)
                     #     rospy.loginfo("not target room")
                     #     pub_speech.publish(door_num)#
                     #     door_num.data[0] = door_num.data[1]#
@@ -451,7 +439,7 @@ if __name__ == '__main__':
                     #         move_straight_time("forward", 1, 1)#
 
                 else:
-                    rospy.loginfo("don't see door sign")#move to the original way by man
+                    rospy.loginfo("don't see door sign")
                     #
                     # move_straight_time("forward", 1, 1)#
                     # 
