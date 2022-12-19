@@ -309,6 +309,7 @@ if __name__ == '__main__':
                         rotate(degree)
                         rospy.sleep(2)
                         move_straight_time("forward", speed, depth_image[center]/speed)
+                        rospy.sleep(2)
                         
                     rospy.sleep(3)
                     # ISee = 0
@@ -400,19 +401,18 @@ if __name__ == '__main__':
         
             if(ISee == 3):
                 rospy.loginfo("see the door")
-                for i in range(3):
+                for i in range(5):
+                    rotate(degree)
+                    rospy.sleep(2)
+                    move_straight_time("forward", speed, depth_image[center]/speed)
+                    rospy.sleep(2)
                 # rospy.Subscriber("CenterAndDegree", Float64MultiArray, CenterAndDegree)
                 rospy.sleep(15)
                 ISee = 0
-                # rospy.Subscriber('SeeSomething', Int8, SeeSomething)
                 if(ISee == 4):
                     rospy.loginfo("see the door sign")
-                    # rospy.Subscriber('SeeDoorNum', Int8, SeeDoorNum)#
                     rospy.sleep(5)
                     if (ISee == 5):
-
-                    # rospy.loginfo(door_num.data[1])
-                    # if(target_room == door_num.data[1]):
                         rospy.loginfo("we find the target room")
                         mention = 3
                         pub.publish(mention)
@@ -423,6 +423,7 @@ if __name__ == '__main__':
                         break
                     else:#not the target room
                         rospy.sleep(15)
+                        rotate(90)
                     #     rospy.loginfo("not target room")
                     #     pub_speech.publish(door_num)#
                     #     door_num.data[0] = door_num.data[1]#
@@ -440,7 +441,7 @@ if __name__ == '__main__':
 
                 else:
                     rospy.loginfo("don't see door sign")
-                    #
+                    rotate(90)
                     # move_straight_time("forward", 1, 1)#
                     # 
             else:
@@ -452,8 +453,7 @@ if __name__ == '__main__':
                     # 
 
                 else:
-                    rospy.loginfo("keep finding door")
-                    # rospy.Subscriber("/zed2/zed_node/depth/depth_registered", Image, callback=depth_callback, queue_size=1)    
+                    rospy.loginfo("keep finding door") 
                     rotate_degree()
                     rospy.sleep(2)
                     move_straight_time("forward", speed, depth[tmp]/speed)#0.5 change to depth[tmp]
