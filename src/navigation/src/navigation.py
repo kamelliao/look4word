@@ -3,9 +3,7 @@ import rospy
 from std_msgs.msg import String, Float64MultiArray, Int8
 from sensor_msgs.msg import Image
 from geometry_msgs.msg import Twist
-# from sensor_msgs.msg import LaserScan
 from nav_msgs.msg import Odometry
-# from tf.transformations import euler_from_quaternion, quaternion_from_euler
 from cv_bridge import CvBridge
 import numpy as np
 import cv2
@@ -310,22 +308,21 @@ if __name__ == '__main__':
         #     rospy.Subscriber('target_floor', String, targetFloor)#
         #     print("target", target_floor)
             
-        # print("hahahahahahahahhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
         # target_floor = 4
         # target_room = 12
         while(target_floor == 2 or target_floor == 3 or target_floor == 4):#elevator mode
             # rospy.Subscriber("/zed2/zed_node/depth/depth_registered", Image, callback=depth_callback, queue_size=1)
             rospy.loginfo("searching for elevator")
             while(1):#
-                # rospy.Subscriber("/zed2/zed_node/depth/depth_registered", Image, callback=depth_callback, queue_size=1)
-                # rospy.Subscriber('SeeSomething', Int8, SeeSomething)
-
                 if(ISee == 1 or ISee == 2):
-                    rospy.loginfo("see the elevator")#move to the elevator by man
-                    # rospy.Subscriber("CenterAndDegree", Float64MultiArray, CenterAndDegree)
+                    rospy.loginfo("see the elevator")
                     check = 1
                     rospy.sleep(1)
-                    # rotate_target()
+                    for i in range(5):
+                        rotate(degree)
+                        rospy.sleep(2)
+                        move_straight_time("forward", speed, depth_image[center]/speed)
+                        
                     rospy.sleep(3)
                     # ISee = 0
                     while(1):
@@ -339,9 +336,8 @@ if __name__ == '__main__':
                             rospy.sleep(1)
                             check = 1
                             rospy.sleep(1)
-                            # rotate_target()
                             ISee = 0
-                            print("==============================run============================================")
+                            
                             rospy.sleep(20)
                             mention = 1
                             pub.publish(mention)#
@@ -354,7 +350,9 @@ if __name__ == '__main__':
 
                         if(IHeard == 1):#
                             rospy.loginfo("elevator arrived")
-                            # move_straight_time("forward", 1, 1)#need to modify
+                            
+                            move_straight_time("forward", speed, depth[tmp]/speed)
+
                             while(1):
                                 # rospy.Subscriber('HeardSomething', Int8, HeardSomething)
                                 rospy.loginfo("Waiting for the door closed")
@@ -365,12 +363,7 @@ if __name__ == '__main__':
                                     pub.publish(mention)#
                                     mention = 0
                                     pub.publish(mention)#
-                                    # rotate(-90)#
-                                    # rospy.sleep(1)
-                                    # move_straight_time("forward", 1, 1)#
-                                    # rospy.sleep(1)
-                                    # rotate(90)#
-                                    # rospy.sleep(1)
+                                    rotate(180)
                                     waitForEleOpen = 1
                                     rospy.loginfo("break2")
                                     break
@@ -379,7 +372,6 @@ if __name__ == '__main__':
                             break
                         rospy.sleep(1)
                     while(1):
-                        # rospy.Subscriber('HeardSomething', Int8, HeardSomething)
                         rospy.loginfo("Waiting for reaching the floor")
                         if(IHeard == 3):#
                             rospy.loginfo("reach the target floor")
