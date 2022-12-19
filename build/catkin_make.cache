@@ -1,0 +1,2 @@
+detection:navigation:speech
+-DCATKIN_DEVEL_PREFIX=/home/oreo/team10_ws/devel -DCMAKE_INSTALL_PREFIX=/home/oreo/team10_ws/install -G Unix Makefiles
