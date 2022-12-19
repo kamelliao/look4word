@@ -41,8 +41,6 @@ def speech2text(
         {'label': str, 'proba': float} if mode == 'elevator'
         {'transcript': str} if mode == 'google_api'
     '''
-    # r = sr.Recognizer()
-    # microphone = sr.Microphone(device_index=9, sample_rate=16000, chunk_size=2048)
 
     with microphone as source:
         r.adjust_for_ambient_noise(source)
