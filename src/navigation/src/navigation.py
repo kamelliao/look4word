@@ -218,28 +218,6 @@ def stop_robot():
         cmd.angular.z = 0.0
         pub_vel.publish(cmd)
         
-#         publish_once_in_cmd_vel()
-
-# def publish_once_in_cmd_vel():
-#     """
-#     This is because publishing in topics sometimes fails the first time you publish.
-#     In continuos publishing systems there is no big deal but in systems that publish only
-#     once it IS very important.
-#     """
-#     while not ctrl_c:
-#         connections = pub_vel.get_num_connections()
-#         if connections > 0:
-#             pub_vel.publish(cmd)
-#             rospy.loginfo("Cmd Published")
-#             break
-#         else:
-#             rospy.loginfo("i sleep")
-#             rate.sleep()
-
-# def odom_callback(msg):
-#     orientation_q = msg.pose.pose.orientation
-#     orientation_list = [orientation_q.x, orientation_q.y, orientation_q.z, orientation_q.w]
-#     (roll, pitch, yaw) = euler_from_quaternion (orientation_list)
 
 def CenterAndDegree(msg):
     global center, degree, check
@@ -254,8 +232,7 @@ def CenterAndDegree(msg):
         # rospy.sleep(2)
     else:
         return
-    # move_straight_time("forward", speed, depth_image[center[1],center[0]]/speed)
-    # rospy.sleep(3)
+
 def rotate_target():
     global count3
     count3 = 0
@@ -264,8 +241,6 @@ def rotate_target():
     while (1):
         cmd.angular.z = 2.5 * (target_rad)
         pub_vel.publish(cmd)
-        # print("cmd:", cmd.angular.z)
-        # print("target = {} current:{}",degrees, yaw)
         count3 += 1
         print("count3:", count3)
         rospy.sleep(0.1)
@@ -424,20 +399,6 @@ if __name__ == '__main__':
                     else:#not the target room
                         rospy.sleep(15)
                         rotate(90)
-                    #     rospy.loginfo("not target room")
-                    #     pub_speech.publish(door_num)#
-                    #     door_num.data[0] = door_num.data[1]#
-                        
-                    #     rospy.Subscriber("isKeepGoing_reply", Int8, isKeepGoing)
-                    #     if(keepGoing == 0):#
-                    #         rospy.loginfo("not on the right way")
-                            
-                    #         move_straight_time("forward", 1, 1)
-                            
-                    #     if(keepGoing == 1):#
-                    #         rospy.loginfo("on the right way")
-                    #         # 
-                    #         move_straight_time("forward", 1, 1)#
 
                 else:
                     rospy.loginfo("don't see door sign")
